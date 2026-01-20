@@ -38,9 +38,9 @@ print(f"  λ = √φ           = {LAMBDA:.10f}")
 # SIMULATION PARAMETERS
 #==============================================================================
 
-# Reduced for quicker demo, increase for production
-N_SIMULATIONS = 5          # Number of systems per configuration
-INTEGRATION_TIME = 1e3      # Orbital periods of inner planet (Reduced for speed)
+# Faster but still meaningful results
+N_SIMULATIONS = 15          # Number of systems per configuration
+INTEGRATION_TIME = 5e3      # Orbital periods of inner planet
 PLANET_MASS = 3e-6          # ~1 Earth mass around Sun
 N_PLANETS = 4               # Number of planets per system
 INNER_SEMI_MAJOR = 0.1      # AU (inner planet)
