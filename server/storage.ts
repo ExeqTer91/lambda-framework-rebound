@@ -1,38 +1,34 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import { simulationRuns, type SimulationRun, type InsertSimulationRun } from "@shared/schema";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createSimulationRun(run: InsertSimulationRun): Promise<SimulationRun>;
+  updateSimulationRun(id: number, updates: Partial<SimulationRun>): Promise<SimulationRun>;
+  getLatestSimulationRun(): Promise<SimulationRun | undefined>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async createSimulationRun(run: InsertSimulationRun): Promise<SimulationRun> {
+    const [newRun] = await db.insert(simulationRuns).values(run).returning();
+    return newRun;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async updateSimulationRun(id: number, updates: Partial<SimulationRun>): Promise<SimulationRun> {
+    const [updated] = await db.update(simulationRuns)
+      .set(updates)
+      .where(eq(simulationRuns.id, id))
+      .returning();
+    return updated;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async getLatestSimulationRun(): Promise<SimulationRun | undefined> {
+    const [run] = await db.select()
+      .from(simulationRuns)
+      .orderBy(desc(simulationRuns.id))
+      .limit(1);
+    return run;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
