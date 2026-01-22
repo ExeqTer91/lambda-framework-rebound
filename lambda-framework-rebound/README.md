@@ -71,6 +71,18 @@ print("Simulation complete!")
 - Automatic plot generation
 - Results saved to JSON
 
+## Repository Structure
+```
+lambda-framework-rebound/
+├── lambda_stability_simulation.py  # Main simulation script
+├── lambda_framework_colab.ipynb    # Google Colab notebook
+├── requirements.txt                # Python dependencies
+├── LICENSE                         # MIT License
+├── README.md
+└── results/
+    └── simulation_results.json     # Output data
+```
+
 ## Output Files
 - `results/simulation_results.json` - Full results data
 - `results/results.png` - Stability comparison plot
