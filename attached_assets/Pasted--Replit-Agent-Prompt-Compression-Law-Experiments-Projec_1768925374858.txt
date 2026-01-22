@@ -1,0 +1,486 @@
+# Replit Agent Prompt: φ-Compression Law Experiments
+
+## Project Goal
+
+Build a complete, reproducible experimental framework to validate the **φ-Compression Law** - a conservation law in neural network compression where golden ratio (φ) scaling of layer widths yields:
+
+```
+efficiency × retention = 1.0004 ≈ 1
+```
+
+with efficiency approaching Euler's number (e ≈ 2.718) and retention approaching 1/e ≈ 0.368.
+
+---
+
+## Repository Structure
+
+```
+phi-compression-law/
+├── README.md
+├── requirements.txt
+├── config.yaml
+├── run_experiments.py          # Main entry point
+├── models/
+│   ├── __init__.py
+│   ├── simple_cnn.py           # SimpleCNN with configurable widths
+│   ├── resnet18_phi.py         # ResNet-18 with φ-scaling
+│   ├── convnext_phi.py         # ConvNeXt-Tiny with φ-scaling
+│   ├── vit_phi.py              # Vision Transformer (control - null result expected)
+│   └── phi_transformer.py      # φ-Transformer (hierarchical ViT)
+├── scaling/
+│   ├── __init__.py
+│   └── strategies.py           # Lucas, Fibonacci, Standard, Pi, Sqrt2 scaling
+├── experiments/
+│   ├── __init__.py
+│   ├── trainer.py              # Training loop with metrics
+│   └── evaluator.py            # Efficiency/retention calculations
+├── results/
+│   └── .gitkeep
+└── analysis/
+    ├── __init__.py
+    └── visualize.py            # Pareto frontiers, conservation law plots
+```
+
+---
+
+## Detailed Implementation Requirements
+
+### 1. Scaling Strategies (`scaling/strategies.py`)
+
+```python
+# Lucas numbers: 2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123, 199, 322...
+# Key property: L_n = φ^n + φ^(-n), and φ^n × φ^(-n) = 1
+
+LUCAS = [2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123, 199, 322, 521, 843, 1364, 2207, 3571]
+FIBONACCI = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584]
+
+def get_layer_widths(scaling_type: str, num_layers: int, base_width: int = 32):
+    """
+    Returns layer widths based on scaling strategy.
+    
+    scaling_type: 'standard', 'lucas', 'fibonacci', 'pi', 'sqrt2'
+    
+    Examples for 3-layer CNN:
+    - standard: [32, 64, 128]      # powers of 2
+    - lucas:    [29, 47, 76]       # or [34, 55, 89] depending on start index
+    - fibonacci: [34, 55, 89]
+    - pi:       [20, 63, 198]      # multiply by π each layer
+    - sqrt2:    [32, 45, 64]       # multiply by √2 each layer
+    """
+```
+
+### 2. SimpleCNN (`models/simple_cnn.py`)
+
+```python
+class SimpleCNN(nn.Module):
+    """
+    3 convolutional layers with configurable widths.
+    
+    Architecture:
+    - Conv2d(3, w1, 3, padding=1) → BatchNorm → ReLU → MaxPool
+    - Conv2d(w1, w2, 3, padding=1) → BatchNorm → ReLU → MaxPool
+    - Conv2d(w2, w3, 3, padding=1) → BatchNorm → ReLU → MaxPool
+    - Flatten → Linear(w3 * 4 * 4, 10)
+    
+    Default widths:
+    - Standard: [32, 64, 128]
+    - Lucas:    [29, 47, 76] or [34, 55, 89]
+    """
+```
+
+### 3. ResNet-18 φ-scaled (`models/resnet18_phi.py`)
+
+```python
+class ResNet18Phi(nn.Module):
+    """
+    ResNet-18 with φ-scaled channel widths.
+    
+    Standard ResNet-18 channels: [64, 128, 256, 512]
+    Lucas-scaled channels:       [47, 76, 123, 199]
+    
+    Must preserve residual connections - use 1x1 conv for dimension matching.
+    """
+```
+
+### 4. ConvNeXt-Tiny φ-scaled (`models/convnext_phi.py`)
+
+```python
+class ConvNeXtPhi(nn.Module):
+    """
+    ConvNeXt-Tiny with φ-scaled channels.
+    
+    Standard channels: [96, 192, 384, 768]
+    Lucas-scaled:      [76, 123, 199, 322] or similar progression
+    
+    Preserve inverted bottleneck and LayerNorm.
+    """
+```
+
+### 5. Vision Transformer (`models/vit_phi.py`)
+
+```python
+class ViTPhi(nn.Module):
+    """
+    Vision Transformer - CONTROL CONDITION.
+    
+    Standard ViT: uniform embed_dim across all layers (e.g., 192 or 768)
+    Lucas ViT: still uniform (this should show NULL EFFECT)
+    
+    This validates the "uniform exhaustion hypothesis" - 
+    transformers don't benefit from φ-scaling because they lack hierarchy.
+    
+    Expected result: efficiency ≈ 1.0, no compression benefit
+    """
+```
+
+### 6. φ-Transformer (`models/phi_transformer.py`)
+
+```python
+class PhiTransformer(nn.Module):
+    """
+    NOVEL ARCHITECTURE: Transformer with Lucas-scaled layer capacities.
+    
+    Unlike standard ViT (uniform dimensions), φ-Transformer has:
+    - Progressive embedding dimensions following Lucas numbers
+    - Progressive attention heads following Lucas numbers
+    - Linear projections between layers for dimension matching
+    
+    Example for 6-layer model:
+    - embed_dims: [123, 123, 199, 199, 322, 322]  # Lucas progression
+    - num_heads:  [4, 4, 7, 7, 11, 11]            # Lucas heads
+    
+    Expected result: efficiency ≈ e (2.718), product ≈ 1.0
+    This validates that introducing hierarchy to transformers recovers φ-benefit.
+    """
+```
+
+### 7. Trainer (`experiments/trainer.py`)
+
+```python
+def train_model(
+    model: nn.Module,
+    train_loader: DataLoader,
+    test_loader: DataLoader,
+    epochs: int = 50,
+    lr: float = 0.1,
+    momentum: float = 0.9,
+    seed: int = 42
+) -> dict:
+    """
+    Training protocol:
+    - Optimizer: SGD with momentum 0.9
+    - Scheduler: Cosine annealing
+    - Batch size: 128
+    - Data augmentation: RandomCrop(32, padding=4), RandomHorizontalFlip
+    
+    Returns:
+    {
+        'accuracy': float,          # Test accuracy (0-100)
+        'params': int,              # Total trainable parameters
+        'train_loss': list,         # Loss per epoch
+        'test_acc_history': list    # Accuracy per epoch
+    }
+    """
+```
+
+### 8. Evaluator (`experiments/evaluator.py`)
+
+```python
+def compute_metrics(baseline_results: dict, phi_results: dict) -> dict:
+    """
+    Compute the conservation law metrics.
+    
+    efficiency = (phi_accuracy / phi_params) / (baseline_accuracy / baseline_params)
+               = accuracy_per_param_phi / accuracy_per_param_baseline
+    
+    retention = phi_params / baseline_params
+    
+    product = efficiency × retention  # Should equal ≈ 1.0 for Lucas scaling
+    
+    Returns:
+    {
+        'efficiency': float,        # Expected: ~2.81 for CNNs, ~1.0 for ViT
+        'retention': float,         # Expected: ~0.356 for CNNs
+        'product': float,           # Expected: ~1.0 (conservation law)
+        'param_reduction': float,   # Expected: ~64% for CNNs
+        'accuracy_delta': float     # Expected: < 0.5% for CNNs
+    }
+    """
+```
+
+### 9. Main Runner (`run_experiments.py`)
+
+```python
+"""
+Full experimental protocol: 216 runs total
+
+Architectures: SimpleCNN, ResNet-18, ConvNeXt-Tiny, ViT-Tiny
+Scaling: Standard (baseline), Lucas, Fibonacci
+Learning rates: [0.1, 0.05, 0.01]
+Seeds: [42, 123, 456, 789, 1000, 2024]
+
+4 architectures × 3 scaling × 3 LRs × 6 seeds = 216 runs
+
+Additionally run φ-Transformer experiments (18 runs):
+- Standard ViT baseline
+- Lucas-scaled φ-Transformer
+
+Output: CSV with all results + summary statistics
+"""
+```
+
+---
+
+## Configuration (`config.yaml`)
+
+```yaml
+dataset:
+  name: CIFAR-10
+  batch_size: 128
+  num_workers: 4
+  augmentation:
+    random_crop: 32
+    padding: 4
+    horizontal_flip: true
+
+training:
+  epochs: 50  # Use 10 for quick validation, 50 for full run
+  optimizer: SGD
+  momentum: 0.9
+  scheduler: cosine
+
+hyperparameters:
+  learning_rates: [0.1, 0.05, 0.01]
+  seeds: [42, 123, 456, 789, 1000, 2024]
+
+architectures:
+  - name: SimpleCNN
+    standard_widths: [32, 64, 128]
+    lucas_widths: [29, 47, 76]
+    fibonacci_widths: [34, 55, 89]
+  
+  - name: ResNet18
+    standard_widths: [64, 128, 256, 512]
+    lucas_widths: [47, 76, 123, 199]
+    fibonacci_widths: [55, 89, 144, 233]
+  
+  - name: ConvNeXt
+    standard_widths: [96, 192, 384, 768]
+    lucas_widths: [76, 123, 199, 322]
+    fibonacci_widths: [89, 144, 233, 377]
+  
+  - name: ViT
+    standard_embed_dim: 192
+    lucas_embed_dim: 123  # Should show NO effect (uniform)
+    num_heads: 3
+    num_layers: 6
+    patch_size: 4
+  
+  - name: PhiTransformer
+    embed_dims: [123, 123, 199, 199, 322, 322]
+    num_heads: [4, 4, 7, 7, 11, 11]
+    patch_size: 4
+
+output:
+  results_dir: results/
+  save_checkpoints: false  # Set true for full run
+```
+
+---
+
+## Expected Results
+
+### CNNs (SimpleCNN, ResNet-18, ConvNeXt-Tiny)
+
+| Metric | Expected Value | Tolerance |
+|--------|---------------|-----------|
+| Efficiency gain | 2.81× | ±0.15 |
+| Parameter retention | 0.356 | ±0.02 |
+| Product (eff × ret) | 1.0 | ±0.05 |
+| Accuracy delta | <0.5% | - |
+
+### ViT (Control - Null Result)
+
+| Metric | Expected Value |
+|--------|---------------|
+| Efficiency gain | ~1.0 (no benefit) |
+| Product | N/A |
+
+### φ-Transformer (Prediction Validation)
+
+| Metric | Expected Value | Paper Result |
+|--------|---------------|--------------|
+| Efficiency gain | ~2.76× ≈ e | 2.76× ✓ |
+| Retention | ~0.415 | 0.415 ✓ |
+| Product | ~1.15 | 1.145 ✓ |
+
+---
+
+## requirements.txt
+
+```
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+pyyaml>=6.0
+tqdm>=4.65.0
+```
+
+---
+
+## README.md
+
+```markdown
+# φ-Compression Law: Golden Ratio Neural Network Scaling
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+
+This repository contains the experimental code for validating the **φ-Compression Law**:
+
+> When neural network layer widths follow golden ratio (φ ≈ 1.618) scaling via Lucas numbers, 
+> the product of efficiency gain and parameter retention equals unity:
+>
+> **efficiency × retention = 1.0004 ≈ 1**
+
+## Key Findings
+
+- **2.81× efficiency gain** across CNN architectures (SimpleCNN, ResNet-18, ConvNeXt-Tiny)
+- **64.4% parameter reduction** with <0.5% accuracy loss
+- Efficiency approaches **Euler's number (e ≈ 2.718)**
+- Retention approaches **1/e ≈ 0.368**
+- **Architecture-specific**: CNNs benefit, standard transformers do NOT
+- **φ-Transformer**: Introducing hierarchy to transformers recovers the conservation law
+
+## Quick Start
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/phi-compression-law.git
+cd phi-compression-law
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run quick validation (10 epochs, subset of experiments)
+python run_experiments.py --quick
+
+# Run full experiments (50 epochs, all 216 runs)
+python run_experiments.py --full
+```
+
+## The Conservation Law
+
+The mathematical foundation connects:
+
+- **Lucas identity**: φⁿ + φ⁻ⁿ = Lₙ
+- **Conservation property**: φⁿ × φ⁻ⁿ = 1
+- **Empirical result**: efficiency × retention = 1
+
+| Architecture | Efficiency Gain | Param Reduction | Product |
+|--------------|-----------------|-----------------|---------|
+| SimpleCNN    | 2.80×           | 64.4%           | 0.997   |
+| ResNet-18    | 2.88×           | 65.3%           | 1.000   |
+| ConvNeXt-Tiny| 2.75×           | 63.5%           | 1.004   |
+| ViT-Tiny     | 1.00×           | 0%              | N/A     |
+| **Mean ± SD**| **2.81 ± 0.07×**| **64.4 ± 0.9%** | **1.0004** |
+
+## Layer Width Configurations
+
+### Standard (Power of 2)
+```
+32 → 64 → 128 → 256
+```
+
+### Lucas (φ-scaled)
+```
+29 → 47 → 76 → 123
+```
+
+### Why Lucas, not Fibonacci?
+
+Fibonacci: Fₙ = (φⁿ − ψⁿ)/√5 → encodes *difference*
+Lucas: Lₙ = φⁿ + ψⁿ → encodes *sum* and directly reflects φⁿ × φ⁻ⁿ = 1
+
+Fibonacci achieves efficiency × retention ≈ 1.02-1.05
+Lucas achieves efficiency × retention ≈ 1.0004 (exact conservation)
+
+## Why Transformers Don't Benefit
+
+Standard transformers use **uniform** layer dimensions:
+```
+768 → 768 → 768 → 768 → 768 → 768
+```
+
+No hierarchical "slack" exists for φ-scaling to optimize. This is the **uniform exhaustion hypothesis**.
+
+The **φ-Transformer** introduces hierarchy:
+```
+embed_dims: 233 → 377 → 610 → 987 → 1597 → 2584
+```
+
+This recovers the conservation law (efficiency ≈ 2.76× ≈ e).
+
+## Reproduction
+
+Full experimental protocol:
+- **216 total runs**: 4 architectures × 3 scaling types × 18 hyperparameter configs
+- **Dataset**: CIFAR-10
+- **Training**: 50 epochs, SGD + cosine annealing, batch size 128
+
+```bash
+# Generate all results
+python run_experiments.py --full
+
+# Results saved to results/full_results.csv
+```
+
+## Citation
+
+```bibtex
+@misc{ursachi2026phi,
+  author = {Ursachi, Andrei},
+  title = {The φ-Compression Law: Golden Ratio Scaling Yields e-Optimal Efficiency in Hierarchical Neural Networks},
+  year = {2026},
+  doi = {10.5281/zenodo.XXXXXXX},
+  url = {https://github.com/yourusername/phi-compression-law}
+}
+```
+
+## License
+
+MIT License
+
+## Contact
+
+Andrei Ursachi - Independent Researcher, Bucharest, Romania
+ORCID: 0009-0002-6114-5011
+```
+
+---
+
+## Testing Checklist
+
+After implementation, verify:
+
+- [ ] SimpleCNN Lucas achieves efficiency ~2.8× with product ~1.0
+- [ ] ResNet-18 Lucas achieves similar results
+- [ ] ConvNeXt-Tiny Lucas achieves similar results
+- [ ] ViT shows NO benefit (efficiency ~1.0) - this is expected!
+- [ ] φ-Transformer recovers efficiency ~2.76× ≈ e
+- [ ] Fibonacci achieves product ~1.02-1.05 (worse than Lucas)
+- [ ] Results are reproducible across seeds
+- [ ] CSV output includes all metrics for statistical analysis
+
+---
+
+## Notes for Replit Agent
+
+1. **Start with SimpleCNN** - it's the simplest to validate
+2. **Use 10 epochs initially** for quick iteration, then 50 for final
+3. **The ViT null result is SUCCESS** - it validates the hypothesis
+4. **φ-Transformer is the novel contribution** - ensure dimension projections work correctly
+5. **GPU recommended** but CPU works for SimpleCNN validation
+6. **Save results to CSV** for paper reproduction
