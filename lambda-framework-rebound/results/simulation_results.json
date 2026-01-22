@@ -1,0 +1,63 @@
+{
+  "results": {
+    "λ-spacing (√φ)": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    },
+    "4:3 resonance": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    },
+    "3:2 resonance": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    },
+    "φ-spacing": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    },
+    "2:1 resonance": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    },
+    "Random (1.1-1.5)": {
+      "stability_rate": 98.0,
+      "avg_survival": 98500.0,
+      "stable_count": 49,
+      "total_runs": 50
+    },
+    "Tight (1.15)": {
+      "stability_rate": 72.0,
+      "avg_survival": 72000.0,
+      "stable_count": 36,
+      "total_runs": 50
+    },
+    "Wide (1.8)": {
+      "stability_rate": 100.0,
+      "avg_survival": 100000.0,
+      "stable_count": 50,
+      "total_runs": 50
+    }
+  },
+  "timestamp": "2026-01-22T12:00:00",
+  "parameters": {
+    "N_SIMULATIONS": 50,
+    "INTEGRATION_TIME": 100000,
+    "N_PLANETS": 4,
+    "PLANET_MASS": 3e-06
+  },
+  "constants": {
+    "PHI": 1.618033988749895,
+    "LAMBDA": 1.272019649514069
+  }
+}
