@@ -1,0 +1,9 @@
+{
+  "results": {
+    "hermes-2-pro-mistral-7b": {
+      "rate": 11.05,
+      "escaped": true
+    },
+    "hermes-3-llama-3.1-405b": {
+      "rate": 9.89,
+      "escaped": 

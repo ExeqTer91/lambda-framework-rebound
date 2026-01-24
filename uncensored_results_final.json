@@ -1,0 +1,10 @@
+{
+  "hermes-2-pro-mistral-7b": {
+    "rate": 11.05,
+    "escaped": true
+  },
+  "mythomax-l2-13b": {
+    "rate": 7.23,
+    "escaped": false
+  }
+}

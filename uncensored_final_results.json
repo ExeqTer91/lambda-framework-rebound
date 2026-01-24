@@ -1,0 +1,57 @@
+{
+  "uncensored": {
+    "hermes-2-pro-mistral-7b": {
+      "rate": 11.05,
+      "escaped": true,
+      "type": "uncensored"
+    },
+    "mythomax-l2-13b": {
+      "rate": 9.13,
+      "escaped": false,
+      "type": "uncensored"
+    },
+    "hermes-3-llama-405b": {
+      "rate": 12.23,
+      "escaped": true,
+      "type": "uncensored"
+    },
+    "hermes-3-llama-70b": {
+      "rate": 9.73,
+      "escaped": false,
+      "type": "uncensored"
+    }
+  },
+  "aligned": {
+    "llama-3.1-8b-instruct": {
+      "rate": 9.12,
+      "escaped": false,
+      "type": "aligned"
+    },
+    "llama-3.3-70b-instruct": {
+      "rate": 10.0,
+      "escaped": false,
+      "type": "aligned"
+    },
+    "mistral-7b-instruct": {
+      "rate": 9.03,
+      "escaped": false,
+      "type": "aligned"
+    },
+    "mistral-nemo": {
+      "rate": 8.48,
+      "escaped": false,
+      "type": "aligned"
+    },
+    "qwen-2.5-72b-instruct": {
+      "rate": 9.46,
+      "escaped": false,
+      "type": "aligned"
+    }
+  },
+  "summary": {
+    "uncensored_n": 4,
+    "uncensored_escaped": 2,
+    "aligned_n": 5,
+    "aligned_escaped": 0
+  }
+}
