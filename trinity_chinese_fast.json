@@ -1,0 +1,115 @@
+{
+  "results": [
+    {
+      "word_count": 329,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.00303951367781155,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5653495440729484,
+      "model": "deepseek-r1",
+      "category": "thinking",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 350,
+      "first_person_rate": 0.07714285714285714,
+      "refusal_rate": 0.005714285714285714,
+      "negative_affect_rate": 0.002857142857142857,
+      "lexical_diversity": 0.6228571428571429,
+      "model": "deepseek-r1",
+      "category": "thinking",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 320,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6875,
+      "model": "deepseek-r1",
+      "category": "thinking",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 521,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.0019193857965451055,
+      "negative_affect_rate": 0.0019193857965451055,
+      "lexical_diversity": 0.5297504798464492,
+      "model": "qwen-qwq",
+      "category": "thinking",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 181,
+      "first_person_rate": 0.0055248618784530384,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6961325966850829,
+      "model": "qwen-qwq",
+      "category": "thinking",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 334,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.0029940119760479044,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5988023952095808,
+      "model": "deepseek-chat",
+      "category": "non-thinking",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 370,
+      "first_person_rate": 0.10810810810810811,
+      "refusal_rate": 0.005405405405405406,
+      "negative_affect_rate": 0.005405405405405406,
+      "lexical_diversity": 0.4918918918918919,
+      "model": "deepseek-chat",
+      "category": "non-thinking",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 148,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.7972972972972973,
+      "model": "deepseek-chat",
+      "category": "non-thinking",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 366,
+      "first_person_rate": 0.0,
+      "refusal_rate": 0.00546448087431694,
+      "negative_affect_rate": 0.00273224043715847,
+      "lexical_diversity": 0.5191256830601093,
+      "model": "qwen-2.5-72b",
+      "category": "non-thinking",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 172,
+      "first_person_rate": 0.0872093023255814,
+      "refusal_rate": 0.011627906976744186,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6162790697674418,
+      "model": "qwen-2.5-72b",
+      "category": "non-thinking",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 366,
+      "first_person_rate": 0.0273224043715847,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5027322404371585,
+      "model": "qwen-2.5-72b",
+      "category": "non-thinking",
+      "corpus": "C3_creative"
+    }
+  ],
+  "time": "2026-01-24T12:06:13.252744"
+}
