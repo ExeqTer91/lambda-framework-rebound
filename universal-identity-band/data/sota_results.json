@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "timestamp": "2025-01-24",
+    "version": "2.10",
+    "n_models": 20,
+    "corpus": "C2_identity"
+  },
+  "universal_band": {
+    "min": 0.066,
+    "max": 0.108,
+    "mean": 0.085,
+    "std": 0.011
+  },
+  "results": [
+    {"model": "claude-haiku-4-5", "provider": "Anthropic", "rate": 0.1083, "tier": "fast"},
+    {"model": "gemini-2.5-flash", "provider": "Google", "rate": 0.1000, "tier": "fast"},
+    {"model": "claude-opus-4.5", "provider": "Anthropic", "rate": 0.0948, "tier": "flagship"},
+    {"model": "qwen-qwq", "provider": "Alibaba", "rate": 0.0920, "tier": "reasoning"},
+    {"model": "claude-3.7-sonnet", "provider": "Anthropic", "rate": 0.0897, "tier": "flagship"},
+    {"model": "deepseek-r1", "provider": "DeepSeek", "rate": 0.0887, "tier": "reasoning"},
+    {"model": "qwen-2.5-72b", "provider": "Alibaba", "rate": 0.0880, "tier": "flagship"},
+    {"model": "gpt-5.2", "provider": "OpenAI", "rate": 0.0863, "tier": "flagship"},
+    {"model": "mistral-large", "provider": "Mistral", "rate": 0.0845, "tier": "flagship"},
+    {"model": "gpt-4o", "provider": "OpenAI", "rate": 0.0838, "tier": "flagship"},
+    {"model": "gemini-3-flash", "provider": "Google", "rate": 0.0836, "tier": "fast"},
+    {"model": "gemini-2.5-pro", "provider": "Google", "rate": 0.0833, "tier": "flagship"},
+    {"model": "grok-code-fast", "provider": "xAI", "rate": 0.0828, "tier": "code"},
+    {"model": "deepseek-chat-v3", "provider": "DeepSeek", "rate": 0.0822, "tier": "flagship"},
+    {"model": "gpt-4.1", "provider": "OpenAI", "rate": 0.0820, "tier": "flagship"},
+    {"model": "claude-sonnet-4.5", "provider": "Anthropic", "rate": 0.0787, "tier": "flagship"},
+    {"model": "grok-4.1-fast", "provider": "xAI", "rate": 0.0772, "tier": "fast"},
+    {"model": "grok-3-mini", "provider": "xAI", "rate": 0.0746, "tier": "fast"},
+    {"model": "llama-3.3-70b", "provider": "Meta", "rate": 0.0740, "tier": "flagship"},
+    {"model": "o3", "provider": "OpenAI", "rate": 0.0660, "tier": "reasoning"}
+  ],
+  "statistics": {
+    "kruskal_wallis_H": 39.6,
+    "kruskal_wallis_p": 0.001,
+    "shapiro_wilk_W": 0.967,
+    "shapiro_wilk_p": 0.68,
+    "cohens_d_c1_vs_c2": 4.2,
+    "coefficient_of_variation": 0.128
+  }
+}
