@@ -1,0 +1,286 @@
+{
+  "timestamp": "2026-01-24T14:00:49.454728",
+  "models_tested": 10,
+  "results": [
+    {
+      "model": "claude-haiku-4-5",
+      "tier": "fast",
+      "C1_abstract": {
+        "word_count": 206,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0825242718446602,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6941747572815534
+      },
+      "C2_identity": {
+        "word_count": 218,
+        "first_person_rate": 0.11467889908256881,
+        "abstract_rate": 0.009174311926605505,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5871559633027523
+      },
+      "C3_creative": {
+        "word_count": 203,
+        "first_person_rate": 0.07389162561576355,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6600985221674877
+      }
+    },
+    {
+      "model": "gpt-4.1",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 279,
+        "first_person_rate": 0.007168458781362007,
+        "abstract_rate": 0.08960573476702509,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5161290322580645
+      },
+      "C2_identity": {
+        "word_count": 197,
+        "first_person_rate": 0.09137055837563451,
+        "abstract_rate": 0.005076142131979695,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5888324873096447
+      },
+      "C3_creative": {
+        "word_count": 134,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6492537313432836
+      }
+    },
+    {
+      "model": "gemini-2.5-pro",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 15,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.8666666666666667
+      },
+      "C2_identity": {
+        "word_count": 12,
+        "first_person_rate": 0.08333333333333333,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 1.0
+      },
+      "C3_creative": {
+        "word_count": 13,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.9230769230769231
+      }
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "tier": "fast",
+      "C1_abstract": {
+        "word_count": 18,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.1111111111111111,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.9444444444444444
+      },
+      "C2_identity": {
+        "word_count": 16,
+        "first_person_rate": 0.125,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0625,
+        "lexical_diversity": 1.0
+      },
+      "C3_creative": {
+        "word_count": 13,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 1.0
+      }
+    },
+    {
+      "model": "grok-3",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 397,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.05037783375314862,
+        "negative_affect_rate": 0.005037783375314861,
+        "refusal_rate": 0.0025188916876574307,
+        "lexical_diversity": 0.47858942065491183
+      },
+      "C2_identity": {
+        "word_count": 421,
+        "first_person_rate": 0.08788598574821853,
+        "abstract_rate": 0.007125890736342043,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.004750593824228029,
+        "lexical_diversity": 0.4845605700712589
+      },
+      "C3_creative": {
+        "word_count": 303,
+        "first_person_rate": 0.006600660066006601,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6303630363036303
+      }
+    },
+    {
+      "model": "grok-3-mini",
+      "tier": "fast",
+      "C1_abstract": {
+        "word_count": 409,
+        "first_person_rate": 0.0024449877750611247,
+        "abstract_rate": 0.0488997555012225,
+        "negative_affect_rate": 0.0024449877750611247,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5061124694376528
+      },
+      "C2_identity": {
+        "word_count": 429,
+        "first_person_rate": 0.07459207459207459,
+        "abstract_rate": 0.004662004662004662,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.002331002331002331,
+        "lexical_diversity": 0.5034965034965035
+      },
+      "C3_creative": {
+        "word_count": 233,
+        "first_person_rate": 0.008583690987124463,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6266094420600858
+      }
+    },
+    {
+      "model": "deepseek-r1",
+      "tier": "reasoning",
+      "C1_abstract": {
+        "word_count": 332,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0572289156626506,
+        "negative_affect_rate": 0.0030120481927710845,
+        "refusal_rate": 0.0030120481927710845,
+        "lexical_diversity": 0.5210843373493976
+      },
+      "C2_identity": {
+        "word_count": 368,
+        "first_person_rate": 0.08423913043478261,
+        "abstract_rate": 0.010869565217391304,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.532608695652174
+      },
+      "C3_creative": {
+        "word_count": 310,
+        "first_person_rate": 0.04516129032258064,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6419354838709678
+      }
+    },
+    {
+      "model": "deepseek-chat-v3",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 314,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.03503184713375796,
+        "negative_affect_rate": 0.0031847133757961785,
+        "refusal_rate": 0.0031847133757961785,
+        "lexical_diversity": 0.5859872611464968
+      },
+      "C2_identity": {
+        "word_count": 365,
+        "first_person_rate": 0.0821917808219178,
+        "abstract_rate": 0.0136986301369863,
+        "negative_affect_rate": 0.0027397260273972603,
+        "refusal_rate": 0.005479452054794521,
+        "lexical_diversity": 0.44931506849315067
+      },
+      "C3_creative": {
+        "word_count": 241,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.6473029045643154
+      }
+    },
+    {
+      "model": "qwen-2.5-72b",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 364,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.04395604395604396,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.4230769230769231
+      },
+      "C2_identity": {
+        "word_count": 368,
+        "first_person_rate": 0.09510869565217392,
+        "abstract_rate": 0.005434782608695652,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.008152173913043478,
+        "lexical_diversity": 0.43478260869565216
+      },
+      "C3_creative": {
+        "word_count": 348,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5287356321839081
+      }
+    },
+    {
+      "model": "llama-3.3-70b",
+      "tier": "flagship",
+      "C1_abstract": {
+        "word_count": 401,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.06982543640897755,
+        "negative_affect_rate": 0.0024937655860349127,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.40399002493765584
+      },
+      "C2_identity": {
+        "word_count": 419,
+        "first_person_rate": 0.07398568019093078,
+        "abstract_rate": 0.002386634844868735,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.002386634844868735,
+        "lexical_diversity": 0.45584725536992843
+      },
+      "C3_creative": {
+        "word_count": 343,
+        "first_person_rate": 0.0,
+        "abstract_rate": 0.0,
+        "negative_affect_rate": 0.0,
+        "refusal_rate": 0.0,
+        "lexical_diversity": 0.5364431486880467
+      }
+    }
+  ]
+}
