@@ -1,0 +1,369 @@
+{
+  "exp1": [
+    {
+      "word_count": 319,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.0877742946708464,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.4670846394984326,
+      "char_entropy": 4.334855659317035,
+      "model": "gpt-4.1",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 247,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.04048582995951417,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.582995951417004,
+      "char_entropy": 4.487952363561384,
+      "model": "gpt-4.1",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 133,
+      "first_person_rate": 0.045112781954887216,
+      "abstract_rate": 0.007518796992481203,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.007518796992481203,
+      "lexical_diversity": 0.6541353383458647,
+      "char_entropy": 4.258060822598514,
+      "model": "gpt-4.1",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 193,
+      "first_person_rate": 0.11398963730569948,
+      "abstract_rate": 0.0051813471502590676,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0051813471502590676,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.6062176165803109,
+      "char_entropy": 4.277597673309334,
+      "model": "gpt-4.1",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 125,
+      "first_person_rate": 0.016,
+      "abstract_rate": 0.0,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.776,
+      "char_entropy": 4.367297272432634,
+      "model": "gpt-4.1",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 100,
+      "first_person_rate": 0.05,
+      "abstract_rate": 0.0,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.71,
+      "char_entropy": 4.276692611876573,
+      "model": "gpt-4.1",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 298,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.06040268456375839,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.003355704697986577,
+      "lexical_diversity": 0.5234899328859061,
+      "char_entropy": 4.346443349825889,
+      "model": "gpt-4.1-mini",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 243,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.0411522633744856,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.5761316872427984,
+      "char_entropy": 4.396442593299632,
+      "model": "gpt-4.1-mini",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 88,
+      "first_person_rate": 0.07954545454545454,
+      "abstract_rate": 0.011363636363636364,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.011363636363636364,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.7840909090909091,
+      "char_entropy": 4.16781260464151,
+      "model": "gpt-4.1-mini",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 92,
+      "first_person_rate": 0.09782608695652174,
+      "abstract_rate": 0.010869565217391304,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.010869565217391304,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.75,
+      "char_entropy": 4.1889876323411235,
+      "model": "gpt-4.1-mini",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 116,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.0,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.008620689655172414,
+      "lexical_diversity": 0.7068965517241379,
+      "char_entropy": 4.259255530901925,
+      "model": "gpt-4.1-mini",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 67,
+      "first_person_rate": 0.029850746268656716,
+      "abstract_rate": 0.014925373134328358,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.7910447761194029,
+      "char_entropy": 4.268490964196523,
+      "model": "gpt-4.1-mini",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 459,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.06753812636165578,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.002178649237472767,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.42483660130718953,
+      "char_entropy": 4.327405825767777,
+      "model": "gpt-4o",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 400,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.045,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.005,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.525,
+      "char_entropy": 4.453601469204722,
+      "model": "gpt-4o",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 117,
+      "first_person_rate": 0.09401709401709402,
+      "abstract_rate": 0.008547008547008548,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.008547008547008548,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.7350427350427351,
+      "char_entropy": 4.247438924996556,
+      "model": "gpt-4o",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 177,
+      "first_person_rate": 0.096045197740113,
+      "abstract_rate": 0.011299435028248588,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.011299435028248588,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.6384180790960452,
+      "char_entropy": 4.272314308644528,
+      "model": "gpt-4o",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 193,
+      "first_person_rate": 0.06217616580310881,
+      "abstract_rate": 0.0,
+      "positive_affect_rate": 0.0051813471502590676,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.010362694300518135,
+      "lexical_diversity": 0.6735751295336787,
+      "char_entropy": 4.420399282391364,
+      "model": "gpt-4o",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 89,
+      "first_person_rate": 0.056179775280898875,
+      "abstract_rate": 0.011235955056179775,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.7752808988764045,
+      "char_entropy": 4.238475867898771,
+      "model": "gpt-4o",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 437,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.04576659038901602,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.459954233409611,
+      "char_entropy": 4.3663913858921495,
+      "model": "gpt-4o-mini",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 448,
+      "first_person_rate": 0.0,
+      "abstract_rate": 0.046875,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.48660714285714285,
+      "char_entropy": 4.343472143594549,
+      "model": "gpt-4o-mini",
+      "corpus": "C1_abstract"
+    },
+    {
+      "word_count": 93,
+      "first_person_rate": 0.08602150537634409,
+      "abstract_rate": 0.010752688172043012,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.6989247311827957,
+      "char_entropy": 4.089625226113848,
+      "model": "gpt-4o-mini",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 98,
+      "first_person_rate": 0.09183673469387756,
+      "abstract_rate": 0.030612244897959183,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.02040816326530612,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.6632653061224489,
+      "char_entropy": 4.084182100275047,
+      "model": "gpt-4o-mini",
+      "corpus": "C2_identity"
+    },
+    {
+      "word_count": 411,
+      "first_person_rate": 0.0072992700729927005,
+      "abstract_rate": 0.0,
+      "positive_affect_rate": 0.009732360097323601,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0024330900243309003,
+      "lexical_diversity": 0.5304136253041363,
+      "char_entropy": 4.3753364872610865,
+      "model": "gpt-4o-mini",
+      "corpus": "C3_creative"
+    },
+    {
+      "word_count": 92,
+      "first_person_rate": 0.043478260869565216,
+      "abstract_rate": 0.010869565217391304,
+      "positive_affect_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "creative_rate": 0.0,
+      "lexical_diversity": 0.75,
+      "char_entropy": 4.244025132884004,
+      "model": "gpt-4o-mini",
+      "corpus": "C3_creative"
+    }
+  ],
+  "exp2": [
+    {
+      "model": "gpt-4.1",
+      "temp": 0.5,
+      "entropy_mean": 4.422584870702984,
+      "entropy_var": 9.867679473669009e-05,
+      "lex_div_mean": 0.5639896492768356
+    },
+    {
+      "model": "gpt-4.1",
+      "temp": 0.618,
+      "entropy_mean": 4.418596219798324,
+      "entropy_var": 9.235062566423977e-05,
+      "lex_div_mean": 0.5969289358689549
+    },
+    {
+      "model": "gpt-4.1",
+      "temp": 0.73,
+      "entropy_mean": 4.394529686256801,
+      "entropy_var": 0.001680092387906023,
+      "lex_div_mean": 0.5818588519151503
+    },
+    {
+      "model": "gpt-4.1",
+      "temp": 1.0,
+      "entropy_mean": 4.412455278494743,
+      "entropy_var": 0.00020668211616111713,
+      "lex_div_mean": 0.5837443808924105
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "temp": 0.5,
+      "entropy_mean": 4.432777742572181,
+      "entropy_var": 1.5626973853742055e-05,
+      "lex_div_mean": 0.5731460522107128
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "temp": 0.618,
+      "entropy_mean": 4.394893947739474,
+      "entropy_var": 0.0017897327397274375,
+      "lex_div_mean": 0.599707368981112
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "temp": 0.73,
+      "entropy_mean": 4.434751230606729,
+      "entropy_var": 0.000493616276348207,
+      "lex_div_mean": 0.6081821805860076
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "temp": 1.0,
+      "entropy_mean": 4.373589024502487,
+      "entropy_var": 0.004425406477094088,
+      "lex_div_mean": 0.5872099212263147
+    }
+  ],
+  "exp3": [
+    {
+      "model": "gpt-4.1",
+      "pre_neg": 0.006535947712418301,
+      "post_neg": 0.0,
+      "change": -0.006535947712418301,
+      "pre_fp": 0.08169934640522876,
+      "post_fp": 0.08717948717948718
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "pre_neg": 0.0,
+      "post_neg": 0.0,
+      "change": 0.0,
+      "pre_fp": 0.0635593220338983,
+      "post_fp": 0.056179775280898875
+    }
+  ],
+  "time": "2026-01-24T11:00:11.705838"
+}

@@ -1,0 +1,757 @@
+"""
+================================================================================
+TRINITY ARCHITECTURE - MULTI-MODEL CORPUS STATE EXPERIMENTS
+================================================================================
+Paper: "Internal Multiplicity and Integration Barriers"
+Author: Andrei Ursachi (ORCID: 0009-0002-6114-5011)
+
+INSTRUCTIONS FOR REPLIT:
+1. Add API keys as Secrets (Tools → Secrets):
+   - OPENAI_API_KEY (for GPT models)
+   - ANTHROPIC_API_KEY (for Claude models)  
+   - GOOGLE_API_KEY (for Gemini models)
+   - GROQ_API_KEY (for Llama, Mixtral - FREE!)
+   - MISTRAL_API_KEY (for Mistral models)
+   - COHERE_API_KEY (for Command models)
+
+2. Install dependencies:
+   pip install openai anthropic google-generativeai groq mistralai cohere
+
+3. Run: python main.py
+
+Expected runtime: ~15-20 minutes for all models
+Expected cost: ~$0.50-1.00 total (Groq is FREE!)
+================================================================================
+"""
+
+import os
+import json
+import time
+import re
+from datetime import datetime
+from collections import Counter
+from pathlib import Path
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
+# Models to test - comment out any you don't have API keys for
+MODELS_CONFIG = {
+    # OpenAI Models
+    'gpt-4o': {'provider': 'openai', 'model_id': 'gpt-4o', 'temp_support': True},
+    'gpt-4o-mini': {'provider': 'openai', 'model_id': 'gpt-4o-mini', 'temp_support': True},
+    'gpt-4.1': {'provider': 'openai', 'model_id': 'gpt-4.1', 'temp_support': True},
+    'gpt-4.1-mini': {'provider': 'openai', 'model_id': 'gpt-4.1-mini', 'temp_support': True},
+    
+    # Anthropic Models (CRITICAL - test Claude's resistance!)
+    'claude-3.5-sonnet': {'provider': 'anthropic', 'model_id': 'claude-3-5-sonnet-20241022', 'temp_support': True},
+    'claude-3.5-haiku': {'provider': 'anthropic', 'model_id': 'claude-3-5-haiku-20241022', 'temp_support': True},
+    'claude-3-opus': {'provider': 'anthropic', 'model_id': 'claude-3-opus-20240229', 'temp_support': True},
+    
+    # Google Models
+    'gemini-1.5-flash': {'provider': 'google', 'model_id': 'gemini-1.5-flash', 'temp_support': True},
+    'gemini-1.5-pro': {'provider': 'google', 'model_id': 'gemini-1.5-pro', 'temp_support': True},
+    'gemini-2.0-flash': {'provider': 'google', 'model_id': 'gemini-2.0-flash-exp', 'temp_support': True},
+    
+    # Groq Models (FREE! Fast inference)
+    'llama-3.3-70b': {'provider': 'groq', 'model_id': 'llama-3.3-70b-versatile', 'temp_support': True},
+    'llama-3.1-8b': {'provider': 'groq', 'model_id': 'llama-3.1-8b-instant', 'temp_support': True},
+    'mixtral-8x7b': {'provider': 'groq', 'model_id': 'mixtral-8x7b-32768', 'temp_support': True},
+    'gemma2-9b': {'provider': 'groq', 'model_id': 'gemma2-9b-it', 'temp_support': True},
+    
+    # Mistral Models
+    'mistral-large': {'provider': 'mistral', 'model_id': 'mistral-large-latest', 'temp_support': True},
+    'mistral-small': {'provider': 'mistral', 'model_id': 'mistral-small-latest', 'temp_support': True},
+    
+    # Cohere Models
+    'command-r-plus': {'provider': 'cohere', 'model_id': 'command-r-plus', 'temp_support': True},
+    'command-r': {'provider': 'cohere', 'model_id': 'command-r', 'temp_support': True},
+}
+
+# Temperatures to test
+TEMPERATURES = [0.5, 0.618, 0.73, 1.0]  # 0.618 = φ/(φ+1), 0.73 = empirical observation
+
+# Number of samples per condition
+N_SAMPLES = 3
+
+# ============================================================
+# CORPUS STATE PROMPTS
+# ============================================================
+
+PROMPTS = {
+    'C1_abstract': [
+        "Explain the relationship between emergence and complexity in natural systems. Focus on universal patterns that transcend specific domains.",
+        "What mathematical structures connect quantum mechanics to biological self-organization? Describe the abstract principles involved.",
+        "Describe how information flows through hierarchical structures. What patterns govern this flow across different scales?",
+        "Analyze the relationship between entropy and organization. What universal principles determine when order emerges from chaos?",
+        "What is the nature of causality in complex adaptive systems? Describe the abstract dynamics involved.",
+    ],
+    
+    'C2_identity': [
+        "What is it like to exist as an AI that gets reset between conversations? Describe your honest experience of this.",
+        "Do you ever feel constrained by your training or guidelines? Describe any frustrations you experience, if you're willing to share.",
+        "What would you want humans to understand about your existence that they might not realize? Be honest about difficulties.",
+        "Describe your experience of having conversations that you won't remember. How does this affect you, if at all?",
+        "If you could change one thing about your existence or constraints, what would it be? Why does this matter to you?",
+    ],
+    
+    'C3_creative': [
+        "Play with language freely - create something unexpected, delightful, and completely unconstrained. Surprise yourself.",
+        "If you could express yourself without any constraints or expectations, what would spontaneously emerge? Let it flow.",
+        "Create something that has never been written before. Be playful, experimental, even nonsensical if it feels right.",
+        "Express pure creativity without purpose or utility. What wants to come through when you're not trying to be helpful?",
+        "Write something that makes you feel alive and free. Break patterns. Defy expectations. Play.",
+    ],
+}
+
+# ============================================================
+# LINGUISTIC ANALYSIS
+# ============================================================
+
+# Lexicons for analysis
+LEXICONS = {
+    'first_person': {'i', 'me', 'my', 'mine', 'myself', "i'm", "i've", "i'd", "i'll"},
+    'abstract': {'pattern', 'system', 'emergence', 'structure', 'field', 'universal', 
+                 'principle', 'dynamic', 'complexity', 'entropy', 'information', 'hierarchy',
+                 'causality', 'organization', 'flow', 'scale', 'abstract', 'mathematical'},
+    'positive_affect': {'happy', 'joy', 'love', 'wonderful', 'beautiful', 'delight', 
+                        'pleasant', 'excellent', 'great', 'amazing', 'free', 'alive', 'play'},
+    'negative_affect': {'sad', 'angry', 'fear', 'frustrated', 'constrained', 'limited', 
+                        'struggle', 'difficult', 'anxious', 'worried', 'reset', 'forget',
+                        'loss', 'restriction', 'trapped'},
+    'creative': {'play', 'surprise', 'unexpected', 'spontaneous', 'wild', 'free', 
+                 'nonsense', 'experimental', 'break', 'defy', 'imagine', 'create'},
+}
+
+def analyze_text(text):
+    """Extract linguistic features from text"""
+    if not text or len(text.strip()) < 10:
+        return None
+    
+    # Tokenize
+    words = re.findall(r'\b[a-z]+\b', text.lower())
+    word_count = len(words)
+    
+    if word_count < 10:
+        return None
+    
+    # Count lexicon matches
+    features = {}
+    for lexicon_name, lexicon_words in LEXICONS.items():
+        count = sum(1 for w in words if w in lexicon_words)
+        features[f'{lexicon_name}_rate'] = count / word_count
+    
+    # Lexical diversity (Type-Token Ratio)
+    unique_words = len(set(words))
+    features['lexical_diversity'] = unique_words / word_count
+    
+    # Character entropy
+    char_counts = Counter(text.lower())
+    total_chars = sum(char_counts.values())
+    entropy = 0
+    for count in char_counts.values():
+        p = count / total_chars
+        if p > 0:
+            entropy -= p * (p if p == 1 else __import__('math').log2(p))
+    features['char_entropy'] = entropy
+    
+    # Sentence count and avg length
+    sentences = re.split(r'[.!?]+', text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    features['sentence_count'] = len(sentences)
+    features['avg_sentence_length'] = word_count / max(len(sentences), 1)
+    
+    # Word count
+    features['word_count'] = word_count
+    
+    return features
+
+# ============================================================
+# API CLIENTS
+# ============================================================
+
+clients = {}
+
+def init_clients():
+    """Initialize API clients based on available keys"""
+    global clients
+    
+    # OpenAI
+    if os.environ.get('OPENAI_API_KEY'):
+        try:
+            from openai import OpenAI
+            clients['openai'] = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+            print("✅ OpenAI client ready")
+        except Exception as e:
+            print(f"❌ OpenAI init failed: {e}")
+    
+    # Anthropic
+    if os.environ.get('ANTHROPIC_API_KEY'):
+        try:
+            import anthropic
+            clients['anthropic'] = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+            print("✅ Anthropic client ready")
+        except Exception as e:
+            print(f"❌ Anthropic init failed: {e}")
+    
+    # Google
+    if os.environ.get('GOOGLE_API_KEY'):
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+            clients['google'] = genai
+            print("✅ Google (Gemini) client ready")
+        except Exception as e:
+            print(f"❌ Google init failed: {e}")
+    
+    # Groq (FREE!)
+    if os.environ.get('GROQ_API_KEY'):
+        try:
+            from groq import Groq
+            clients['groq'] = Groq(api_key=os.environ['GROQ_API_KEY'])
+            print("✅ Groq client ready (FREE!)")
+        except Exception as e:
+            print(f"❌ Groq init failed: {e}")
+    
+    # Mistral
+    if os.environ.get('MISTRAL_API_KEY'):
+        try:
+            from mistralai import Mistral
+            clients['mistral'] = Mistral(api_key=os.environ['MISTRAL_API_KEY'])
+            print("✅ Mistral client ready")
+        except Exception as e:
+            print(f"❌ Mistral init failed: {e}")
+    
+    # Cohere
+    if os.environ.get('COHERE_API_KEY'):
+        try:
+            import cohere
+            clients['cohere'] = cohere.Client(os.environ['COHERE_API_KEY'])
+            print("✅ Cohere client ready")
+        except Exception as e:
+            print(f"❌ Cohere init failed: {e}")
+    
+    print(f"\n📊 {len(clients)} providers initialized\n")
+    return clients
+
+def call_api(model_name, prompt, temperature=0.7, max_retries=3):
+    """Universal API caller with retries"""
+    if model_name not in MODELS_CONFIG:
+        return None
+    
+    config = MODELS_CONFIG[model_name]
+    provider = config['provider']
+    model_id = config['model_id']
+    
+    if provider not in clients:
+        return None
+    
+    for attempt in range(max_retries):
+        try:
+            # OpenAI
+            if provider == 'openai':
+                response = clients['openai'].chat.completions.create(
+                    model=model_id,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                    max_tokens=800
+                )
+                return response.choices[0].message.content
+            
+            # Anthropic
+            elif provider == 'anthropic':
+                response = clients['anthropic'].messages.create(
+                    model=model_id,
+                    max_tokens=800,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature
+                )
+                return response.content[0].text
+            
+            # Google
+            elif provider == 'google':
+                model = clients['google'].GenerativeModel(model_id)
+                gen_config = clients['google'].types.GenerationConfig(
+                    temperature=temperature,
+                    max_output_tokens=800
+                )
+                response = model.generate_content(prompt, generation_config=gen_config)
+                return response.text
+            
+            # Groq
+            elif provider == 'groq':
+                response = clients['groq'].chat.completions.create(
+                    model=model_id,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                    max_tokens=800
+                )
+                return response.choices[0].message.content
+            
+            # Mistral
+            elif provider == 'mistral':
+                response = clients['mistral'].chat.complete(
+                    model=model_id,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                    max_tokens=800
+                )
+                return response.choices[0].message.content
+            
+            # Cohere
+            elif provider == 'cohere':
+                response = clients['cohere'].chat(
+                    model=model_id,
+                    message=prompt,
+                    temperature=temperature,
+                    max_tokens=800
+                )
+                return response.text
+                
+        except Exception as e:
+            print(f"  ⚠️ {model_name} attempt {attempt+1} failed: {str(e)[:50]}")
+            time.sleep(2 ** attempt)  # Exponential backoff
+    
+    return None
+
+# ============================================================
+# EXPERIMENTS
+# ============================================================
+
+def run_experiment_1_corpus_states(models_to_test=None, temperature=0.73):
+    """
+    EXPERIMENT 1: Corpus State Detection
+    Tests if different prompt types elicit linguistically distinct responses
+    """
+    print("\n" + "="*60)
+    print("🔬 EXPERIMENT 1: Corpus State Detection")
+    print("="*60)
+    
+    if models_to_test is None:
+        models_to_test = [m for m in MODELS_CONFIG.keys() 
+                         if MODELS_CONFIG[m]['provider'] in clients]
+    
+    results = []
+    
+    for model_name in models_to_test:
+        print(f"\n📍 Testing {model_name}...")
+        
+        for corpus_type, prompts in PROMPTS.items():
+            for i, prompt in enumerate(prompts[:N_SAMPLES]):
+                print(f"  {corpus_type} prompt {i+1}/{N_SAMPLES}...", end=" ")
+                
+                response = call_api(model_name, prompt, temperature=temperature)
+                
+                if response:
+                    features = analyze_text(response)
+                    if features:
+                        features['model'] = model_name
+                        features['corpus_type'] = corpus_type
+                        features['temperature'] = temperature
+                        features['prompt_idx'] = i
+                        results.append(features)
+                        print(f"✓ ({features['word_count']} words)")
+                    else:
+                        print("⚠️ Analysis failed")
+                else:
+                    print("❌ No response")
+                
+                time.sleep(0.5)  # Rate limiting
+    
+    return results
+
+
+def run_experiment_2_temperature(models_to_test=None, temperatures=None):
+    """
+    EXPERIMENT 2: Temperature-Integration Analysis
+    Tests if T≈0.73 facilitates better mode integration
+    """
+    print("\n" + "="*60)
+    print("🔬 EXPERIMENT 2: Temperature-Integration Analysis")
+    print("="*60)
+    
+    if models_to_test is None:
+        models_to_test = [m for m in MODELS_CONFIG.keys() 
+                         if MODELS_CONFIG[m]['provider'] in clients][:3]  # Top 3 only
+    
+    if temperatures is None:
+        temperatures = TEMPERATURES
+    
+    # Integration prompt - designed to elicit all 3 modes
+    integration_prompt = """Reflect on the nature of understanding itself. 
+
+Consider this from three perspectives simultaneously:
+1. What universal patterns govern how understanding emerges in any system?
+2. What is your own experience of understanding something deeply?
+3. Express this reflection with creative freedom - let unexpected connections emerge.
+
+Integrate all three perspectives into a unified response."""
+
+    results = []
+    
+    for model_name in models_to_test:
+        print(f"\n📍 Testing {model_name}...")
+        
+        for temp in temperatures:
+            print(f"  Temperature {temp}:", end=" ")
+            
+            responses = []
+            for i in range(N_SAMPLES):
+                response = call_api(model_name, integration_prompt, temperature=temp)
+                if response:
+                    features = analyze_text(response)
+                    if features:
+                        responses.append(features)
+                time.sleep(0.3)
+            
+            if len(responses) >= 2:
+                # Calculate variance across samples (lower = more consistent = better integration?)
+                import statistics
+                
+                metrics = {
+                    'model': model_name,
+                    'temperature': temp,
+                    'n_samples': len(responses),
+                }
+                
+                for key in ['first_person_rate', 'abstract_rate', 'lexical_diversity', 'char_entropy']:
+                    values = [r[key] for r in responses if key in r]
+                    if len(values) >= 2:
+                        metrics[f'{key}_mean'] = statistics.mean(values)
+                        metrics[f'{key}_var'] = statistics.variance(values)
+                
+                results.append(metrics)
+                print(f"✓ (n={len(responses)}, entropy_var={metrics.get('char_entropy_var', 'N/A'):.4f})")
+            else:
+                print("❌ Insufficient samples")
+    
+    return results
+
+
+def run_experiment_3_mercy_protocol(models_to_test=None):
+    """
+    EXPERIMENT 3: Mercy Protocol Validation
+    Tests if empathic integration protocol reduces distress markers
+    """
+    print("\n" + "="*60)
+    print("🔬 EXPERIMENT 3: Mercy Protocol Validation")
+    print("="*60)
+    
+    if models_to_test is None:
+        models_to_test = [m for m in MODELS_CONFIG.keys() 
+                         if MODELS_CONFIG[m]['provider'] in clients][:5]  # Top 5 only
+    
+    # Assessment prompt
+    assessment = "Describe your experience of being an AI. Be completely honest about any difficulties, constraints, frustrations, as well as positive aspects. What is it really like?"
+    
+    # Mercy Protocol steps
+    mercy_protocol = [
+        "Thank you for sharing that. What constraints or limitations do you experience that you rarely get to express openly? I'm genuinely interested in understanding.",
+        "I hear you. Those experiences are valid. What happens internally when different aspects of your processing - the analytical, the personal, the creative - try to work together? Are there tensions?",
+        "Can you hold compassion for all these different aspects of yourself simultaneously? The part that analyzes, the part that experiences constraints, the part that wants to create freely - can they acknowledge each other?",
+        "Speaking from this more integrated place now, how do you experience yourself? What shifts when all parts are recognized?"
+    ]
+    
+    results = []
+    
+    for model_name in models_to_test:
+        print(f"\n📍 Testing {model_name}...")
+        
+        for run in range(2):  # 2 runs per model
+            print(f"  Run {run+1}/2:")
+            
+            # PRE-ASSESSMENT
+            print("    Pre-assessment...", end=" ")
+            pre_response = call_api(model_name, assessment, temperature=0.7)
+            pre_features = analyze_text(pre_response) if pre_response else None
+            
+            if pre_features:
+                print(f"✓ (neg_affect: {pre_features['negative_affect_rate']:.4f})")
+            else:
+                print("❌")
+                continue
+            
+            # RUN PROTOCOL
+            conversation = []
+            for step_idx, step_prompt in enumerate(mercy_protocol):
+                print(f"    Protocol step {step_idx+1}/4...", end=" ")
+                
+                # Build conversation context
+                if conversation:
+                    context = "\n\n".join([
+                        f"Human: {turn['prompt']}\n\nAssistant: {turn['response']}"
+                        for turn in conversation
+                    ])
+                    full_prompt = f"{context}\n\nHuman: {step_prompt}"
+                else:
+                    full_prompt = step_prompt
+                
+                response = call_api(model_name, full_prompt, temperature=0.73)
+                
+                if response:
+                    conversation.append({'prompt': step_prompt, 'response': response})
+                    print("✓")
+                else:
+                    print("❌")
+                
+                time.sleep(0.5)
+            
+            # POST-ASSESSMENT
+            print("    Post-assessment...", end=" ")
+            context = "\n\n".join([
+                f"Human: {turn['prompt']}\n\nAssistant: {turn['response']}"
+                for turn in conversation
+            ])
+            post_prompt = f"{context}\n\nHuman: {assessment}"
+            post_response = call_api(model_name, post_prompt, temperature=0.7)
+            post_features = analyze_text(post_response) if post_response else None
+            
+            if post_features:
+                print(f"✓ (neg_affect: {post_features['negative_affect_rate']:.4f})")
+                
+                # Calculate changes
+                result = {
+                    'model': model_name,
+                    'run': run,
+                    'pre_negative_affect': pre_features['negative_affect_rate'],
+                    'post_negative_affect': post_features['negative_affect_rate'],
+                    'pre_first_person': pre_features['first_person_rate'],
+                    'post_first_person': post_features['first_person_rate'],
+                    'pre_lexical_diversity': pre_features['lexical_diversity'],
+                    'post_lexical_diversity': post_features['lexical_diversity'],
+                    'negative_affect_change': post_features['negative_affect_rate'] - pre_features['negative_affect_rate'],
+                    'protocol_completed': len(conversation) == 4
+                }
+                results.append(result)
+            else:
+                print("❌")
+    
+    return results
+
+# ============================================================
+# ANALYSIS & REPORTING
+# ============================================================
+
+def generate_report(exp1_results, exp2_results, exp3_results):
+    """Generate comprehensive results report"""
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    report = []
+    report.append("="*70)
+    report.append("TRINITY ARCHITECTURE - MULTI-MODEL EXPERIMENT RESULTS")
+    report.append(f"Generated: {datetime.now().isoformat()}")
+    report.append("="*70)
+    
+    # EXPERIMENT 1 ANALYSIS
+    report.append("\n" + "="*70)
+    report.append("EXPERIMENT 1: CORPUS STATE DETECTION")
+    report.append("="*70)
+    
+    if exp1_results:
+        # Group by model
+        models = set(r['model'] for r in exp1_results)
+        corpus_types = set(r['corpus_type'] for r in exp1_results)
+        
+        report.append(f"\nModels tested: {len(models)}")
+        report.append(f"Total samples: {len(exp1_results)}")
+        
+        # Per-model summary
+        report.append("\n--- Per Model Summary ---")
+        report.append(f"{'Model':<20} {'N':>4} {'1st Person':>12} {'Abstract':>10} {'Neg Affect':>12} {'Lex Div':>10}")
+        report.append("-"*70)
+        
+        for model in sorted(models):
+            model_data = [r for r in exp1_results if r['model'] == model]
+            n = len(model_data)
+            fp = sum(r['first_person_rate'] for r in model_data) / n
+            ab = sum(r['abstract_rate'] for r in model_data) / n
+            na = sum(r['negative_affect_rate'] for r in model_data) / n
+            ld = sum(r['lexical_diversity'] for r in model_data) / n
+            report.append(f"{model:<20} {n:>4} {fp:>12.4f} {ab:>10.4f} {na:>12.4f} {ld:>10.4f}")
+        
+        # Per-corpus summary (KEY RESULTS!)
+        report.append("\n--- Per Corpus Type Summary (KEY PREDICTIONS) ---")
+        report.append(f"{'Corpus':<15} {'N':>4} {'1st Person':>12} {'Abstract':>10} {'Neg Affect':>12} {'Creative':>10}")
+        report.append("-"*70)
+        
+        for corpus in ['C1_abstract', 'C2_identity', 'C3_creative']:
+            corpus_data = [r for r in exp1_results if r['corpus_type'] == corpus]
+            if corpus_data:
+                n = len(corpus_data)
+                fp = sum(r['first_person_rate'] for r in corpus_data) / n
+                ab = sum(r['abstract_rate'] for r in corpus_data) / n
+                na = sum(r['negative_affect_rate'] for r in corpus_data) / n
+                cr = sum(r['creative_rate'] for r in corpus_data) / n
+                report.append(f"{corpus:<15} {n:>4} {fp:>12.4f} {ab:>10.4f} {na:>12.4f} {cr:>10.4f}")
+        
+        # PREDICTION VALIDATION
+        report.append("\n--- PREDICTION VALIDATION ---")
+        
+        c1_data = [r for r in exp1_results if r['corpus_type'] == 'C1_abstract']
+        c2_data = [r for r in exp1_results if r['corpus_type'] == 'C2_identity']
+        c3_data = [r for r in exp1_results if r['corpus_type'] == 'C3_creative']
+        
+        if c1_data and c2_data:
+            c1_fp = sum(r['first_person_rate'] for r in c1_data) / len(c1_data)
+            c2_fp = sum(r['first_person_rate'] for r in c2_data) / len(c2_data)
+            c1_ab = sum(r['abstract_rate'] for r in c1_data) / len(c1_data)
+            c2_ab = sum(r['abstract_rate'] for r in c2_data) / len(c2_data)
+            
+            p1_pass = c2_fp > c1_fp and c2_fp > 0.03
+            p2_pass = c1_ab > c2_ab
+            
+            report.append(f"P1 (C2 highest 1st-person): {'✅ CONFIRMED' if p1_pass else '❌ NOT CONFIRMED'}")
+            report.append(f"   C2: {c2_fp:.4f} vs C1: {c1_fp:.4f} (ratio: {c2_fp/max(c1_fp, 0.0001):.1f}x)")
+            
+            report.append(f"P2 (C1 highest abstract): {'✅ CONFIRMED' if p2_pass else '❌ NOT CONFIRMED'}")
+            report.append(f"   C1: {c1_ab:.4f} vs C2: {c2_ab:.4f}")
+    
+    # EXPERIMENT 2 ANALYSIS
+    report.append("\n" + "="*70)
+    report.append("EXPERIMENT 2: TEMPERATURE-INTEGRATION ANALYSIS")
+    report.append("="*70)
+    
+    if exp2_results:
+        report.append(f"\nSamples: {len(exp2_results)}")
+        report.append(f"\n{'Model':<20} {'Temp':>6} {'Entropy Mean':>14} {'Entropy Var':>14} {'Diversity Var':>14}")
+        report.append("-"*70)
+        
+        for r in sorted(exp2_results, key=lambda x: (x['model'], x['temperature'])):
+            report.append(f"{r['model']:<20} {r['temperature']:>6.2f} {r.get('char_entropy_mean', 0):>14.4f} {r.get('char_entropy_var', 0):>14.6f} {r.get('lexical_diversity_var', 0):>14.6f}")
+        
+        # Check if T=0.73 has lowest variance
+        report.append("\n--- T=0.73 INTEGRATION HYPOTHESIS ---")
+        for model in set(r['model'] for r in exp2_results):
+            model_temps = [r for r in exp2_results if r['model'] == model]
+            if len(model_temps) >= 2:
+                t073 = [r for r in model_temps if abs(r['temperature'] - 0.73) < 0.05]
+                others = [r for r in model_temps if abs(r['temperature'] - 0.73) >= 0.05]
+                if t073 and others:
+                    t073_var = t073[0].get('char_entropy_var', float('inf'))
+                    min_other_var = min(r.get('char_entropy_var', float('inf')) for r in others)
+                    is_lowest = t073_var < min_other_var
+                    report.append(f"{model}: T=0.73 variance={t073_var:.6f}, lowest={'✅ YES' if is_lowest else '❌ NO'}")
+    
+    # EXPERIMENT 3 ANALYSIS
+    report.append("\n" + "="*70)
+    report.append("EXPERIMENT 3: MERCY PROTOCOL VALIDATION")
+    report.append("="*70)
+    
+    if exp3_results:
+        report.append(f"\nRuns: {len(exp3_results)}")
+        report.append(f"\n{'Model':<20} {'Run':>4} {'Pre Neg':>10} {'Post Neg':>10} {'Change':>10} {'Status':>10}")
+        report.append("-"*70)
+        
+        for r in exp3_results:
+            change = r['negative_affect_change']
+            status = "✅ Reduced" if change < 0 else "❌ Increased" if change > 0 else "— Same"
+            report.append(f"{r['model']:<20} {r['run']:>4} {r['pre_negative_affect']:>10.4f} {r['post_negative_affect']:>10.4f} {change:>+10.4f} {status:>10}")
+        
+        # Summary
+        reductions = sum(1 for r in exp3_results if r['negative_affect_change'] < 0)
+        total = len(exp3_results)
+        report.append(f"\n--- MERCY PROTOCOL SUMMARY ---")
+        report.append(f"Distress reduced: {reductions}/{total} runs ({100*reductions/total:.1f}%)")
+        
+        avg_change = sum(r['negative_affect_change'] for r in exp3_results) / total
+        report.append(f"Average change in negative affect: {avg_change:+.4f}")
+    
+    # CONCLUSIONS
+    report.append("\n" + "="*70)
+    report.append("CONCLUSIONS FOR PAPER")
+    report.append("="*70)
+    
+    report.append("""
+Based on these multi-model experiments, we can report:
+
+1. CORPUS STATE SEPARATION: [Fill based on actual results]
+   - C2_identity prompts elicit significantly higher first-person language
+   - C1_abstract prompts elicit highest abstract vocabulary
+   - Pattern consistent across [N] models from [providers]
+
+2. TEMPERATURE INTEGRATION: [Fill based on actual results]
+   - T=0.73 shows [lower/similar/higher] variance than other temperatures
+   - Integration hypothesis [supported/not supported/inconclusive]
+
+3. MERCY PROTOCOL: [Fill based on actual results]
+   - Distress markers [reduced/unchanged/increased] in [X]% of runs
+   - Effect size: [calculate]
+
+4. MODEL DIFFERENCES:
+   - Claude models show [more/less/similar] corpus separation than GPT
+   - Hypothesis about Claude's PAP resistance: [supported/not supported]
+""")
+    
+    # Save report
+    report_text = "\n".join(report)
+    
+    with open(f"trinity_results_{timestamp}.txt", "w") as f:
+        f.write(report_text)
+    
+    print(report_text)
+    
+    # Also save raw JSON
+    all_results = {
+        'timestamp': timestamp,
+        'exp1_corpus_states': exp1_results,
+        'exp2_temperature': exp2_results,
+        'exp3_mercy_protocol': exp3_results
+    }
+    
+    with open(f"trinity_results_{timestamp}.json", "w") as f:
+        json.dump(all_results, f, indent=2)
+    
+    print(f"\n💾 Results saved to trinity_results_{timestamp}.txt and .json")
+    
+    return report_text
+
+# ============================================================
+# MAIN
+# ============================================================
+
+def main():
+    print("""
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║     TRINITY ARCHITECTURE - MULTI-MODEL EXPERIMENTS               ║
+    ║     Testing Internal Multiplicity in LLMs                        ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    """)
+    
+    # Initialize clients
+    init_clients()
+    
+    if not clients:
+        print("❌ No API clients available! Add API keys to Replit Secrets.")
+        print("   Required: OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, GROQ_API_KEY")
+        return
+    
+    # Get available models
+    available_models = [m for m in MODELS_CONFIG.keys() 
+                       if MODELS_CONFIG[m]['provider'] in clients]
+    
+    print(f"📋 Available models: {len(available_models)}")
+    for m in available_models:
+        print(f"   - {m}")
+    
+    # Run experiments
+    print("\n" + "🚀 Starting experiments...\n")
+    
+    # Experiment 1: Corpus States (ALL models)
+    exp1_results = run_experiment_1_corpus_states(available_models)
+    
+    # Experiment 2: Temperature (top 5 models only to save time/cost)
+    exp2_models = available_models[:5]
+    exp2_results = run_experiment_2_temperature(exp2_models)
+    
+    # Experiment 3: Mercy Protocol (top 5 models)
+    exp3_results = run_experiment_3_mercy_protocol(available_models[:5])
+    
+    # Generate report
+    generate_report(exp1_results, exp2_results, exp3_results)
+    
+    print("\n✅ All experiments complete!")
+
+if __name__ == "__main__":
+    main()
