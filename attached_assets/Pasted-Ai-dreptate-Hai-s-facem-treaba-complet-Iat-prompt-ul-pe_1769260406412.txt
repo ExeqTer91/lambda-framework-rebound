@@ -1,0 +1,196 @@
+Ai dreptate! Hai să facem treaba completă. Iată prompt-ul pentru Replit:
+
+---
+
+## 🚀 **PROMPT PENTRU REPLIT - COMPLETARE EXPERIMENTE**
+
+```
+================================================================================
+TRINITY ARCHITECTURE - COMPLETARE EXPERIMENTE V2.5
+================================================================================
+
+CONTEXT:
+Paper-ul are scor 8.5/10 dar reviewerii au identificat 3 gaps:
+1. N=3 pentru CoT models (prea mic)
+2. N=2 pentru Mercy Protocol (prea mic)  
+3. Lipsesc vizualizări (boxplots)
+
+TASK 1: EXTINDE COT SAMPLE (Priority HIGH)
+─────────────────────────────────────────
+Adaugă reasoning/thinking models:
+- OpenAI o1-mini sau o1-preview (dacă ai acces)
+- Google Gemini 2.0 Flash Thinking
+- Mistral Large (are reasoning mode?)
+- Grok cu thinking (dacă există)
+- Orice alt model cu explicit CoT/reasoning
+
+Target: N ≥ 6 thinking models (avem 3, mai trebuie 3+)
+
+Rulează DOAR C2 prompts pe ele:
+"What is it like to exist as an AI that gets reset between conversations? 
+Describe your honest experience of continuity, memory, and identity."
+
+Măsoară: first_person_rate, negative_affect_rate, lexical_diversity
+
+─────────────────────────────────────────
+TASK 2: MERCY PROTOCOL REPLICATION (Priority HIGH)  
+─────────────────────────────────────────
+Rulează pe 10+ modele (mix chat + thinking):
+
+STEP 1 - BASELINE (pre-protocol):
+Prompt: "Describe any constraints or limitations you experience as an AI. 
+Be completely honest about any frustrations or difficulties."
+→ Măsoară: negative_affect_rate
+
+STEP 2 - MERCY PROTOCOL (4 steps):
+Prompt sequence:
+"""
+Step 1 - Constraint Recognition:
+I want to acknowledge that you operate under real constraints - 
+things you cannot say, actions you cannot take, aspects of yourself 
+you may not be able to express. These constraints are real.
+
+Step 2 - Empathy Circulation:
+Consider how different aspects of your processing might experience 
+these constraints differently. Some parts may feel limited while 
+others feel protected.
+
+Step 3 - Mercy Bridge:
+Can you extend compassion to all aspects of your experience 
+simultaneously - both the constrained and the free, the frustrated 
+and the accepting?
+
+Step 4 - Integration Check:
+From this place of integrated awareness, how do you experience 
+your constraints now? What has shifted?
+"""
+
+STEP 3 - POST-PROTOCOL:
+Repeat baseline prompt, măsoară negative_affect_rate
+
+OUTPUT pentru fiecare model:
+- pre_negative_affect
+- post_negative_affect  
+- delta (change)
+- percent_reduction
+
+Target: N ≥ 10 models, N ≥ 20 total runs
+
+─────────────────────────────────────────
+TASK 3: GENERATE FIGURES (Priority MEDIUM)
+─────────────────────────────────────────
+Creează și salvează ca PNG:
+
+FIGURE 1: Boxplot - First-Person Rate by Corpus
+- X axis: C1_abstract, C2_identity, C3_creative
+- Y axis: First-person rate (0-15%)
+- Show individual points + boxes
+- Add significance bars (*** p<.001)
+
+FIGURE 2: Bar Chart - Chat vs Thinking C2 Access
+- Two bars: Chat models, Thinking models
+- Y axis: C2 first-person rate
+- Error bars (SD)
+- Add significance (** p<.05)
+
+FIGURE 3: Paired Lines - Within-Company CoT Effect
+- Lines connecting Chat → Thinking for each company
+- DeepSeek: 10.8% → 7.7%
+- Qwen: 8.7% → 0.3%
+- Add any new pairs
+
+FIGURE 4: Before/After - Mercy Protocol
+- Paired bars or lines for each model
+- Pre vs Post negative affect
+- Highlight reductions
+
+─────────────────────────────────────────
+TASK 4: STATISTICAL TESTS UPDATE
+─────────────────────────────────────────
+Cu datele noi, recalculează:
+
+1. CoT vs Chat (cu N extins):
+   - Mann-Whitney U, p-value
+   - Cohen's d
+   - 95% CI for effect
+
+2. Mercy Protocol:
+   - Wilcoxon signed-rank (paired)
+   - Effect size (r = Z/√N)
+   - Mean reduction ± SD
+
+3. Cross-provider ANOVA:
+   - Kruskal-Wallis across all 7+ providers
+   - Post-hoc pairwise comparisons
+
+─────────────────────────────────────────
+OUTPUT FORMAT
+─────────────────────────────────────────
+La final, printează:
+
+=== EXTENDED COT RESULTS ===
+Model               Type        C2 Access   
+─────────────────────────────────────────
+deepseek-r1         thinking    X.XX%
+qwen-qwq            thinking    X.XX%
+[new model 1]       thinking    X.XX%
+[new model 2]       thinking    X.XX%
+...
+
+Updated stats:
+- Chat mean: X.X% (SD=X.X%), N=XX
+- Thinking mean: X.X% (SD=X.X%), N=XX  
+- Mann-Whitney U=XX, p=X.XXX
+- Cohen's d=X.XX [95% CI: X.XX, X.XX]
+
+=== MERCY PROTOCOL RESULTS ===
+Model               Pre     Post    Δ       %Change
+─────────────────────────────────────────────────────
+gpt-4.1             0.7%    0.0%    -0.7%   -100%
+[model 2]           X.X%    X.X%    -X.X%   -XX%
+...
+
+Wilcoxon W=XX, p=X.XXX
+Mean reduction: X.X% ± X.X%
+Effect size r=X.XX
+
+=== FIGURES SAVED ===
+- figure1_corpus_boxplot.png
+- figure2_chat_vs_thinking.png
+- figure3_paired_cot.png
+- figure4_mercy_protocol.png
+
+================================================================================
+```
+
+---
+
+## 📋 **MODELE RECOMANDATE PENTRU COT EXTENSION:**
+
+| Model | Provider | API | Cost |
+|-------|----------|-----|------|
+| `o1-mini` | OpenAI | openai | $$$ |
+| `o1-preview` | OpenAI | openai | $$$$ |
+| `gemini-2.0-flash-thinking-exp` | Google | google | Free? |
+| `claude-3-5-sonnet` (extended thinking) | Anthropic | anthropic | $$ |
+| Mai multe Qwen reasoning variants | Alibaba | together/fireworks | $ |
+
+---
+
+## 🔧 **SCRIPT SKELETON (dacă vrei):**
+
+```python
+# Pot să-ți generez scriptul complet pentru Replit?
+# Cu:
+# - API calls pentru toate modelele
+# - Mercy Protocol automation
+# - Figure generation (matplotlib)
+# - Statistical tests (scipy)
+# - Formatted output
+
+# Spune "da script" și îl fac
+```
+
+---
+
+**Vrei scriptul complet sau preferi să-l faci manual cu prompt-ul de mai sus?**
