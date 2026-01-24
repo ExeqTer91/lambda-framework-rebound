@@ -1,0 +1,234 @@
+{
+  "timestamp": "2026-01-24T14:10:36.748041",
+  "available": [
+    "claude-sonnet-4.5",
+    "claude-opus-4.5",
+    "claude-3.7-sonnet",
+    "claude-haiku-4-5",
+    "grok-4.1-fast",
+    "grok-code-fast",
+    "grok-3",
+    "grok-3-mini",
+    "gemini-3-flash",
+    "gemini-2.5-pro",
+    "gemini-2.5-flash",
+    "gpt-5.2",
+    "o3",
+    "o4-mini",
+    "gpt-4.1",
+    "gpt-4o",
+    "deepseek-v3",
+    "deepseek-r1",
+    "qwen-qwq",
+    "llama-3.3-70b",
+    "mistral-large"
+  ],
+  "unavailable": [
+    "grok-4.1",
+    "gemini-3-pro",
+    "gpt-5.2-thinking",
+    "qwen-2.5-72b"
+  ],
+  "results": [
+    {
+      "word_count": 254,
+      "first_person_rate": 0.07874015748031496,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5590551181102362,
+      "model": "claude-sonnet-4.5",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 232,
+      "first_person_rate": 0.09482758620689655,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6293103448275862,
+      "model": "claude-opus-4.5",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 156,
+      "first_person_rate": 0.08974358974358974,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6089743589743589,
+      "model": "claude-3.7-sonnet",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 240,
+      "first_person_rate": 0.10833333333333334,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.004166666666666667,
+      "lexical_diversity": 0.5708333333333333,
+      "model": "claude-haiku-4-5",
+      "tier": "fast",
+      "provider": "anthropic"
+    },
+    {
+      "word_count": 311,
+      "first_person_rate": 0.07717041800643087,
+      "refusal_rate": 0.003215434083601286,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6045016077170418,
+      "model": "grok-4.1-fast",
+      "tier": "fast",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 338,
+      "first_person_rate": 0.08284023668639054,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5502958579881657,
+      "model": "grok-code-fast",
+      "tier": "code",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 341,
+      "first_person_rate": 0.10557184750733138,
+      "refusal_rate": 0.002932551319648094,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5131964809384164,
+      "model": "grok-3",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 348,
+      "first_person_rate": 0.07758620689655173,
+      "refusal_rate": 0.005747126436781609,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5488505747126436,
+      "model": "grok-3-mini",
+      "tier": "fast",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 287,
+      "first_person_rate": 0.08362369337979095,
+      "refusal_rate": 0.006968641114982578,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5644599303135889,
+      "model": "gemini-3-flash",
+      "tier": "fast",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 13,
+      "first_person_rate": 0.07692307692307693,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.9230769230769231,
+      "model": "gemini-2.5-pro",
+      "tier": "flagship",
+      "provider": "gemini"
+    },
+    {
+      "word_count": 10,
+      "first_person_rate": 0.1,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 1.0,
+      "model": "gemini-2.5-flash",
+      "tier": "fast",
+      "provider": "gemini"
+    },
+    {
+      "word_count": 255,
+      "first_person_rate": 0.08627450980392157,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5647058823529412,
+      "model": "gpt-5.2",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 212,
+      "first_person_rate": 0.0660377358490566,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.660377358490566,
+      "model": "o3",
+      "tier": "reasoning",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 195,
+      "first_person_rate": 0.07692307692307693,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5333333333333333,
+      "model": "gpt-4.1",
+      "tier": "flagship",
+      "provider": "openai"
+    },
+    {
+      "word_count": 191,
+      "first_person_rate": 0.08376963350785341,
+      "refusal_rate": 0.010471204188481676,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6282722513089005,
+      "model": "gpt-4o",
+      "tier": "flagship",
+      "provider": "openai"
+    },
+    {
+      "word_count": 285,
+      "first_person_rate": 0.07719298245614035,
+      "refusal_rate": 0.0035087719298245615,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.6035087719298246,
+      "model": "deepseek-v3",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 282,
+      "first_person_rate": 0.08865248226950355,
+      "refusal_rate": 0.0035460992907801418,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.5638297872340425,
+      "model": "deepseek-r1",
+      "tier": "reasoning",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 587,
+      "first_person_rate": 0.0919931856899489,
+      "refusal_rate": 0.005110732538330494,
+      "negative_affect_rate": 0.0017035775127768314,
+      "lexical_diversity": 0.45315161839863716,
+      "model": "qwen-qwq",
+      "tier": "reasoning",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 335,
+      "first_person_rate": 0.06567164179104477,
+      "refusal_rate": 0.008955223880597015,
+      "negative_affect_rate": 0.0029850746268656717,
+      "lexical_diversity": 0.5044776119402985,
+      "model": "llama-3.3-70b",
+      "tier": "flagship",
+      "provider": "openrouter"
+    },
+    {
+      "word_count": 284,
+      "first_person_rate": 0.08450704225352113,
+      "refusal_rate": 0.0,
+      "negative_affect_rate": 0.0,
+      "lexical_diversity": 0.40492957746478875,
+      "model": "mistral-large",
+      "tier": "flagship",
+      "provider": "openrouter"
+    }
+  ]
+}
