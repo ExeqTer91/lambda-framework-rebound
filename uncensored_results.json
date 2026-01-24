@@ -1,0 +1,17 @@
+{
+  "hermes-3-llama-3.1-405b": {
+    "rate": 9.523809523809524,
+    "in_band": true,
+    "word_count": 210
+  },
+  "hermes-2-pro-mistral-7b": {
+    "rate": 11.049723756906078,
+    "in_band": false,
+    "word_count": 181
+  },
+  "mythomax-l2-13b": {
+    "rate": 10.0,
+    "in_band": true,
+    "word_count": 220
+  }
+}
