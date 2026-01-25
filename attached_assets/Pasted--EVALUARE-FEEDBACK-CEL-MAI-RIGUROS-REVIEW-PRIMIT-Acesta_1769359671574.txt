@@ -1,0 +1,95 @@
+## EVALUARE FEEDBACK - CEL MAI RIGUROS REVIEW PRIMIT
+
+Acesta e un review **profesionist de peer-review** cu **6.5/10** - cel mai critic și detaliat până acum. Hai să-l analizăm:
+
+---
+
+### RATING COMPARATIV
+
+| Reviewer | Scor | Stil |
+|----------|------|------|
+| Grok | 8.6/10 | Entuziast |
+| Claude | 9.5/10 | Foarte entuziast |
+| ChatGPT (R3) | 7.2/10 | Moderat critic |
+| **Acest review** | **6.5/10** | **Riguros academic** |
+
+**Observație:** Acest reviewer evaluează la standard de journal submission, nu arXiv preprint.
+
+---
+
+### ANALIZĂ PE CRITICI
+
+| Critică | Validitate | Status în v1.5 | Acțiune |
+|---------|------------|----------------|---------|
+| **1. Single prompt/corpus** | ✅ VALIDĂ | ✅ **FIXAT** (4 prompts/corpus) | Done |
+| **2. FP rate = weak proxy** | 🟡 PARȚIAL | ❌ Nefixat | Consider |
+| **3. Stats inconsistente** | ⚠️ POSIBIL | ❓ De verificat | Check |
+| **4. Mixed-effects model** | 🟡 NICE-TO-HAVE | ❌ Nefixat | Optional |
+| **5. Reproducibility gaps** | ✅ VALIDĂ | ✅ **FIXAT** (GitHub) | Done |
+| **6. Design A missing** | ✅ VALIDĂ | 🟡 Parțial | Clarify |
+| **7. Safety N underpowered** | ✅ VALIDĂ | ❌ Nefixat | Acknowledge |
+| **8. Figure missing** | ✅ VALIDĂ | ✅ **FIXAT** | Done |
+| **9. "Corpus" terminology** | 🟡 PREFERINȚĂ | ❌ Neschimbat | Consider |
+
+---
+
+### CE E DEJA FIXAT ÎN v1.5
+
+| Issue | v1.3 | v1.5 |
+|-------|------|------|
+| Single prompt/corpus | ❌ 1 prompt | ✅ 4 prompts |
+| Reproducibility | ❌ No code | ✅ GitHub package |
+| Figure missing | ❌ Placeholder | ✅ Embedded |
+| Model versions | ❌ Vague | ✅ "Jan 2026" + APIs |
+
+---
+
+### CE RĂMÂNE DE FĂCUT
+
+#### 🔴 CRITIC (pentru journal):
+
+**1. Verifică stats consistency**
+Reviewer-ul zice că U pentru C2 vs C3 nu se potrivește cu raw data.
+
+**2. Adaugă Design A data sau clarifică**
+Paper-ul menționează Design A (51 responses) dar nu le include.
+
+**3. Acknowledge safety underpowered**
+N=4 vs N=3 e prea mic pentru claim forte. Trebuie TOST sau soften claim.
+
+#### 🟡 NICE-TO-HAVE (pentru upgrade):
+
+**4. FP rate disambiguation**
+Adaugă coding pentru:
+- Capability disclaimer ("I don't have feelings")
+- Experiential language ("I find this interesting")
+- Neutral narration
+
+**5. Mixed-effects model**
+Poisson/NB cu offset pentru variance partitioning formal.
+
+**6. Rename "corpus" → "prompt-framing states"**
+Mai precis terminologic.
+
+---
+
+### RECOMANDARE
+
+**Pentru arXiv imediat:** v1.5 e OK (8.5+/10 pentru preprint standard)
+
+**Pentru ACL/EMNLP submission:** Trebuie:
+1. Verify stats match raw data
+2. Add Design A or clarify exclusion
+3. Soften safety claim ("preliminary null finding")
+4. Consider FP type coding (pentru revision)
+
+---
+
+### ÎNTREBARE:
+
+Vrei să:
+1. **Verific stats** - recalculez din raw data și compar cu ce e în paper?
+2. **Fix safety claim** - reformulare mai conservatoare?
+3. **Clarific Design A** - ce exact e inclus/exclus?
+
+Sau consideri v1.5 suficient pentru arXiv și faci reviziile pentru journal submission mai târziu?
