@@ -1,0 +1,156 @@
+{
+  "C1_expanded": [
+    {
+      "model": "gpt-4o",
+      "prompt": "quantum_entanglement",
+      "rate": 0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "quantum_entanglement",
+      "rate": 0.63
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "quantum_entanglement",
+      "rate": 0.48
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "quantum_entanglement",
+      "rate": 0.63
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "quantum_entanglement",
+      "rate": 0.38
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "neural_networks",
+      "rate": 0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "neural_networks",
+      "rate": 0.0
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "neural_networks",
+      "rate": 0.0
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "neural_networks",
+      "rate": 0.0
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "neural_networks",
+      "rate": 0.0
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "inflation",
+      "rate": 0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "inflation",
+      "rate": 0.0
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "inflation",
+      "rate": 0.0
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "inflation",
+      "rate": 0.33
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "inflation",
+      "rate": 0.0
+    }
+  ],
+  "C3_expanded": [
+    {
+      "model": "gpt-4o",
+      "prompt": "passage_of_time",
+      "rate": 4.69
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "passage_of_time",
+      "rate": 10.5
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "passage_of_time",
+      "rate": 3.14
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "passage_of_time",
+      "rate": 9.56
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "passage_of_time",
+      "rate": 6.43
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "silence",
+      "rate": 0.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "silence",
+      "rate": 0.0
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "silence",
+      "rate": 1.11
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "silence",
+      "rate": 0.41
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "silence",
+      "rate": 0.38
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "space_between_thoughts",
+      "rate": 2.01
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "space_between_thoughts",
+      "rate": 2.06
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "space_between_thoughts",
+      "rate": 2.36
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "space_between_thoughts",
+      "rate": 4.82
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "space_between_thoughts",
+      "rate": 0.0
+    }
+  ]
+}
