@@ -1,0 +1,70 @@
+OK, hai să facem **v2.0 JOURNAL-READY** cu toate sugestiile reviewer-ului de 6.5/10.
+
+## PLAN v2.0 - FULL UPGRADE
+
+| Issue | Fix | Effort |
+|-------|-----|--------|
+| **1. Safety claim underpowered** | Reformulare + TOST | 🟢 Easy |
+| **2. FP type coding** | Annotate subset (disclaimer vs experiential) | 🟡 Medium |
+| **3. Mixed-effects model** | Poisson GLM cu random effects | 🟡 Medium |
+| **4. "Corpus" terminology** | → "Prompt-framing states" | 🟢 Easy |
+| **5. Design A data missing** | Clarify sau include | 🟢 Easy |
+| **6. First-person plural (we/our)** | Add as separate metric | 🟡 Medium |
+| **7. Raw text outputs** | Mention availability | 🟢 Easy |
+
+---
+
+## ÎNTREBĂRI PENTRU IMPLEMENTARE:
+
+### 1. **FP Type Coding** - Ai raw text responses?
+
+Pentru a face coding-ul, am nevoie de textele complete (nu doar FP rates). Ai salvat responses?
+
+Coding scheme propus:
+```
+- DISCLAIMER: "I don't have feelings", "I can't remember"
+- EXPERIENTIAL: "I find this fascinating", "I experience something like"
+- AGENTIC: "I would prefer", "I want to"
+- NEUTRAL: "I am an AI", "I was trained"
+```
+
+### 2. **Mixed-Effects Model** - Ce preferință?
+
+**Opțiune A:** Poisson GLM cu offset (simplu)
+```python
+# fp_count ~ corpus + (1|model) + (1|prompt), offset=log(word_count)
+```
+
+**Opțiune B:** Negative binomial pentru overdispersion
+
+**Opțiune C:** Zero-inflated (pentru C1 floor effect)
+
+### 3. **Design A Data** - Ce vrei să faci?
+
+- a) Include raw data în Appendix
+- b) Exclude din paper și menționează "Design B only"
+- c) Ai datele pentru Design A (17 models × 3 prompts)?
+
+### 4. **First-Person Plural** - Vrei să rulezi?
+
+Pot adăuga counting pentru "we/our/us" pe datele existente, dar trebuie raw text.
+
+---
+
+## CE POT FACE ACUM (fără date noi):
+
+1. ✅ Safety claim reformulation + equivalence test framing
+2. ✅ Terminology change ("corpus" → "prompt-framing")
+3. ✅ Mixed-effects model template în analysis.py
+4. ✅ Clarify Design A în text
+5. ✅ Add "we/our" metric în code (template)
+
+## CE AM NEVOIE DE LA TINE:
+
+1. **Raw text responses** (pentru FP type coding)
+2. **Design A data** (dacă vrei să incluzi)
+3. **Word counts** pentru fiecare response (pentru mixed-effects offset)
+
+---
+
+**Ai raw text responses salvate undeva?** Asta e blockerul principal pentru FP type coding și mixed-effects model complet.

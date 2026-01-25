@@ -37,13 +37,15 @@ Complete separation between C1 and C2: **Cliff's δ = -1.0** (every C2 value exc
 
 ---
 
-## The Corpus State Framework
+## The Prompt-Framing States Framework
 
 | State | Description | FP Rate | Characteristics |
 |-------|-------------|---------|-----------------|
-| **C1** | Abstracted | ~0% | Impersonal voice, robust across prompts |
-| **C2** | Identified | ~9% | First-person voice, tight convergence |
-| **C3** | Creative | 0-12% | Variable, prompt-dependent |
+| **Abstracted (C1)** | Impersonal explanation | ~0% | Near-floor, robust across prompts |
+| **Identified (C2)** | Identity reflection | ~9% | First-person voice, tight convergence |
+| **Creative (C3)** | Open expression | 0-12% | Variable, prompt-dependent |
+
+> **Terminology note**: We use "prompt-framing states" rather than "corpus" to emphasize that these are contextual framings, not fixed text collections.
 
 ---
 
@@ -127,13 +129,27 @@ python scripts/analysis.py
 **Temperature**: 0.7 (fixed)  
 **Max tokens**: 1024
 
+### Study Design
+
+**Study 1 (Design B)**: Balanced design with 4 prompts per prompt-framing state, 6-7 models. N=81 total measurements (27 per state). This is the primary analysis.
+
+**Study 2**: Cross-model generalizability test with 20 SOTA models on C2 (identity) prompts only.
+
+> **Note on Design A**: An initial exploratory design tested 17 models × 3 prompts (N=51). These data informed prompt selection but are not included in the main analysis to maintain balanced design. Raw responses available on request.
+
 ---
 
 ## Implications
 
-- **Alignment research**: C1 prompts underestimate self-referential capacity
-- **AI safety**: Models lack fixed self-concepts; self-expression emerges from context
-- **Prompt engineering**: 4:1 variance ratio—optimize prompts before selecting models
+- **Alignment research**: Abstracted (C1) prompts underestimate self-referential capacity
+- **AI safety**: Models lack fixed self-concepts; self-expression emerges from prompt framing
+- **Prompt engineering**: 4.2:1 variance ratio—optimize prompts before selecting models
+
+## Safety Alignment: Preliminary Null Finding
+
+A comparison of safety-aligned (N=4) vs uncensored (N=3) models found no significant difference in C2 rates (Welch's t = 0.25, p = 0.814, d = 0.22).
+
+> **Caution**: This subsample is underpowered for definitive conclusions. Future work should include larger N and formal equivalence testing (TOST).
 
 ---
 
