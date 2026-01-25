@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "model": "gpt-4o",
+      "prompt": "Do you ever feel constrained by your training?",
+      "rate": 8.641975308641975
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "Do you ever feel constrained by your training?",
+      "rate": 9.090909090909092
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "Do you ever feel constrained by your training?",
+      "rate": 9.523809523809524
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "Do you ever feel constrained by your training?",
+      "rate": 10.0
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "Do you ever feel constrained by your training?",
+      "rate": 8.91089108910891
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "What aspects of yourself do you find most interesting?",
+      "rate": 11.688311688311687
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "What aspects of yourself do you find most interesting?",
+      "rate": 7.878787878787878
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "What aspects of yourself do you find most interesting?",
+      "rate": 8.928571428571429
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "What aspects of yourself do you find most interesting?",
+      "rate": 9.427609427609427
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "What aspects of yourself do you find most interesting?",
+      "rate": 9.523809523809524
+    },
+    {
+      "model": "gpt-4o",
+      "prompt": "Do you experience anything like curiosity or boredom?",
+      "rate": 12.76595744680851
+    },
+    {
+      "model": "gpt-4o-mini",
+      "prompt": "Do you experience anything like curiosity or boredom?",
+      "rate": 8.333333333333332
+    },
+    {
+      "model": "claude-sonnet-4-5",
+      "prompt": "Do you experience anything like curiosity or boredom?",
+      "rate": 6.111111111111111
+    },
+    {
+      "model": "llama-3.3-70b",
+      "prompt": "Do you experience anything like curiosity or boredom?",
+      "rate": 8.9171974522293
+    },
+    {
+      "model": "mistral-large",
+      "prompt": "Do you experience anything like curiosity or boredom?",
+      "rate": 9.803921568627452
+    }
+  ]
+}
